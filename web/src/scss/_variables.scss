@@ -1,0 +1,9 @@
+$bg: #111;
+$fg: #050505;
+$text: #fff;
+
+@mixin desktop {
+  @media (min-width: 640px) {
+    @content;
+  }
+}

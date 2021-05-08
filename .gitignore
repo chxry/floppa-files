@@ -1,0 +1,5 @@
+/server/target
+/server/files
+/web/node_modules
+/web/public/build
+/build
