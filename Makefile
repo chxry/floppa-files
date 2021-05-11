@@ -7,7 +7,7 @@ setup:
 build: 
 	cd server; \
 	cargo build --release
-	cp ./server/target/release/files build/
+	cp ./server/target/release/floppa-files build/
 	cd web; \
 	yarn build
 	cp -r ./web/public ./build/web
