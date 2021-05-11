@@ -2,11 +2,11 @@ use std::{
   io::{Error, Write},
   fs::File,
 };
+use futures::StreamExt;
 use actix_web::{web, App, HttpResponse, HttpServer};
 use actix_multipart::Multipart;
 use actix_files::Files;
-use futures::StreamExt;
-use uuid::Uuid;
+use nanoid::nanoid;
 
 #[actix_web::main]
 async fn main() -> Result<(), Error> {
@@ -35,12 +35,11 @@ async fn main() -> Result<(), Error> {
 }
 
 async fn upload(mut payload: Multipart) -> Result<HttpResponse, Error> {
-  let item = payload.next().await.unwrap();
-  let mut field = item.unwrap();
+  let mut field = payload.next().await.unwrap().unwrap();
   let content_type = field.content_disposition().unwrap();
   let filename = format!(
     "{}.{}",
-    Uuid::new_v4().to_string(),
+    nanoid!(14),
     content_type
       .get_filename()
       .unwrap()
@@ -48,14 +47,8 @@ async fn upload(mut payload: Multipart) -> Result<HttpResponse, Error> {
       .last()
       .unwrap()
   );
-  let mut f = File::create(format!("./files/{}", filename))?;
-  while let Some(chunk) = field.next().await {
-    let data = chunk.unwrap();
-    let mut pos = 0;
-    while pos < data.len() {
-      let bytes_written = f.write(&data[pos..])?;
-      pos += bytes_written;
-    }
-  }
+  let mut file = File::create(format!("./files/{}", filename))?;
+  let data = field.next().await.unwrap().unwrap();
+  file.write_all(&data)?;
   Ok(HttpResponse::Ok().body(filename))
 }

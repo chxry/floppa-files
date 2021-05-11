@@ -1,0 +1,25 @@
+.file {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  p {
+    flex: 1;
+
+    .fileName {
+      font-weight: 700 !important;
+    }
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-right: 8px;
+  }
+
+  @include desktop {
+    width: 640px;
+  }
+}

@@ -1,0 +1,13 @@
+@import "./_variables.scss";
+
+.questionAnswer {
+  margin-bottom: 1rem;
+
+  h2 {
+    font-weight: 700 !important;
+  }
+
+  p {
+    padding-left: 1rem;
+  }
+}
