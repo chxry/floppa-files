@@ -90,7 +90,6 @@ async fn main() -> Result<(), io::Error> {
 
   let app = Router::new()
     .route("/", get(web::home))
-    .route("/tos", get(web::tos))
     .route(
       "/:id",
       put(upload).get_service(ServeDir::new(&config.file_dir)),

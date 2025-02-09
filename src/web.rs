@@ -19,13 +19,3 @@ pub async fn home(State(state): State<ArcState>) -> Home {
     ver: VER,
   }
 }
-
-#[derive(Template)]
-#[template(path = "tos.html")]
-pub struct Tos {
-  ver: &'static str,
-}
-
-pub async fn tos() -> Tos {
-  Tos { ver: VER }
-}
